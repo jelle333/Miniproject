@@ -1,9 +1,19 @@
 from tkinter import *
 
+def toonVenster():
+    def close():
+        subwindow.withdraw()
+    subwindow = Toplevel(master=root)
+    button2 = Button(master=subwindow,
+                     text='Sluit mij',
+                     command=close)
+    button2.pack(padx=10, pady=10)
+
 root = Tk()
 
 button1 = Button(master=root,
-                text='nog niet aangeboden films',)
+                text='nog niet aangeboden films',
+                 command=toonVenster)
 button1.pack(pady=10)
 
 button2 = Button(master=root,
