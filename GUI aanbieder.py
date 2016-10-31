@@ -2,22 +2,20 @@ from tkinter import *
 
 root = Tk()
 
-button = Button(master=root,
+button1 = Button(master=root,
                 text='nog niet aangeboden films',)
-button.pack(pady=10)
+button1.pack(pady=10)
 
-button = Button(master=root,
+button2 = Button(master=root,
                 text='overzicht films die ik aanbied',)
-button.pack(pady=10)
+button2.pack(pady=10)
 
-
-
-button = Button(master=root,
+button3 = Button(master=root,
                 text='overzicht bezoekers bij mij',)
-button.pack(pady=10)
+button3.pack(pady=10)
 
-button = Button(master=root,
+button4 = Button(master=root,
                 text='aanmeldcode bezoekers',)
-button.pack(pady=10)
+button4.pack(pady=10)
 
 root.mainloop()
