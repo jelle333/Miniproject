@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter.messagebox import showinfo
 from PIL import ImageTk, Image
-import base64
+from datetime import datetime
 from urllib.request import urlopen
 from io import BytesIO
 from API_Opvragen import *
@@ -293,7 +293,7 @@ def movieClick(info,i):
     zender.grid(row=4, column= 1, pady=5, sticky='w')
 
     tijden_Duur = Label(master=perFilmMenu,
-                    text='  Starttijd: {}, Eindtijd: {}, Duur: {}min'.format(info[i][5],info[i][6],info[i][7]),
+                    text='  Starttijd: {}, Eindtijd: {}, Duur: {}min'.format(str(datetime.fromtimestamp(int(info[i][5])))[11:16],str(datetime.fromtimestamp(int(info[i][6])))[11:16],info[i][7]),
                     background='white',
                     wraplength=500,
                     font=('Arial', 12))
