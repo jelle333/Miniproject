@@ -8,10 +8,10 @@ from API_Opvragen import *
 
 
 def clickedNaamMail():
-    global naamInvul,mailInvul
-    naam = naamInvul.get()
-    mail = mailInvul.get()
-    if '@' not in mail or '.' not in mail:
+    global naamInvul,mailInvul,naam1,mail1
+    naam1 = naamInvul.get()
+    mail1 = mailInvul.get()
+    if '@' not in mail1 or '.' not in mail1:
         bericht = 'Dit is geen geldig emailadres, probeer het nog een keer'
         showinfo(title='popup', message=bericht)
     else:
@@ -24,8 +24,15 @@ def plaatjes():
     filmMenu = Toplevel(master=root,background='white')
     info = coversOpvragen()
 
+    welkomGroet = Label(master=filmMenu,
+                text='Welkom, {}'.format(naam1),
+                background='white',
+                font=('Arial', 12),
+                wraplength=250)
+    welkomGroet.grid(row=0,column=0, pady=5,padx=5, sticky='w')
+
     kiesEenFilm = Label(master=filmMenu,
-                text='Kies een van de onderstaande films',
+                text='Deze films zijn vandaag op TV',
                 background='white',
                 font=('Arial', 18))
     kiesEenFilm.grid(row=0,column=1,columnspan=3, pady=5, sticky='nesw')
@@ -242,7 +249,12 @@ def plaatjes():
                            font=('Arial', 16))
             label9.grid(row=4, column= 4, pady=5)
 
+def plaatjes2(perFilmMenu):
+    perFilmMenu.withdraw()
+    plaatjes()
+
 def movieClick(info,i):
+    global perFilmMenu
     filmMenu.withdraw()
     perFilmMenu = Toplevel(master=filmMenu,background='white')
     URL = info[i][0]
@@ -255,24 +267,61 @@ def movieClick(info,i):
 
     button0 = Label(master=perFilmMenu, image=photo0)
     button0.image = photo0
-    button0.grid(row=1, column=0)
+    button0.grid(row=1, column=0, rowspan=5)
 
     text0 = '{} ({})'.format(info[i][1],info[i][2])
 
     label0 = Label(master=perFilmMenu,
                     text=text0,
                     background='white',
-                    wraplength=500,
+                    wraplength=250,
                     font=('Arial', 16))
-    label0.grid(row=2, column= 0, pady=5)
+    label0.grid(row=6, column= 0, rowspan=2, pady=5)
 
     synopsys = Label(master=perFilmMenu,
                     text=info[i][3],
                     background='white',
-                    wraplength=250,
+                    wraplength=500,
                     font=('Arial', 12))
-    synopsys.grid(row=1, column= 1,columnspan= 3, pady=5, sticky='n')
+    synopsys.grid(row=1, column= 1,columnspan= 3, rowspan=3, pady=5, sticky='nw')
 
+    zender = Label(master=perFilmMenu,
+                    text='  Zender: {}'.format(info[i][4]),
+                    background='white',
+                    wraplength=500,
+                    font=('Arial', 12))
+    zender.grid(row=4, column= 1, pady=5, sticky='w')
+
+    tijden_Duur = Label(master=perFilmMenu,
+                    text='  Starttijd: {}, Eindtijd: {}, Duur: {}min'.format(info[i][5],info[i][6],info[i][7]),
+                    background='white',
+                    wraplength=500,
+                    font=('Arial', 12))
+    tijden_Duur.grid(row=5, column= 1,columnspan= 2, pady=5, sticky='w')
+
+    rating = Label(master=perFilmMenu,
+                    text='IMDB Rating: {}'.format(info[i][8]),
+                    background='white',
+                    wraplength=500,
+                    font=('Arial', 12))
+    rating.grid(row=4, column= 2, pady=5, sticky='e')
+
+    terug = Button(master=perFilmMenu,
+                    text='Terug naar Films',
+                   command= lambda: plaatjes2(perFilmMenu),
+                    background='white',
+                    wraplength=500,
+                   width=15,
+                    font=('Arial', 12))
+    terug.grid(row=6, column= 3, pady=5, sticky='n')
+
+    kopen = Button(master=perFilmMenu,
+                    text='Koop een kaartje',
+                    background='white',
+                    wraplength=500,
+                   width=15,
+                    font=('Arial', 12))
+    kopen.grid(row=7, column= 3, pady=5, sticky='n')
 
 
 
@@ -292,7 +341,7 @@ email = Label(master=root, text='Email: ', height=2)
 email.grid(row=1, column= 0,padx=10, pady=2)
 
 login = Button(master=root, text='Log in', command=clickedNaamMail)
-login.grid(row=2, column= 1,padx=10, pady=2)
+login.grid(row=2, column= 1,padx=10, pady=2, sticky='e')
 
 
 
