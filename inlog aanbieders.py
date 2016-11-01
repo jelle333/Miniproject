@@ -5,107 +5,108 @@ import csv
 def raise_frame(frame):
     frame.tkraise()
 
-# def clickedreg():
-#     global entryGebruiker
-#     with open('aanbieders.csv', 'r', newline='') as aanbieders:
-#         reader = csv.reader(aanbieders, delimiter=';')
-#
-#         bezette_gebruikersnamen = []
-#
-#         for row in reader:
-#             bezette_gebruikersnamen.append(row[0])
-#
-#         print(bezette_gebruikersnamen)
-#
-#         if entryGebruiker in bezette_gebruikersnamen:
-#             print('Gebruikersnaam is al bezet!')
+def clickedReg():
+    naam = entryGebruikerReg.get()
+    # .get() werkt niet!
+    wachtwoord1 = entryWw1.get()
+    wachtwoord2 = entryWw2.get()
+    email = entryEmail.get()
+    with open('aanbieders.csv', 'r', newline='') as aanbieders:
+        reader = csv.reader(aanbieders, delimiter=';')
+
+        gebruikteNamen = []
+        gebruikteWw = []
+        gebruikteEmail = []
+
+        for row in reader:
+            gebruikteNamen.append(row[0])
+            gebruikteWw.append(row[1])
+            gebruikteEmail.append(row[2])
+
+        if naam in gebruikteNamen:
+            print('Gekozen gebruikersnaam is al bezet! Kies een ander!')
+
 
 root = Tk()
 
 start = Frame(root)
 inlog = Frame(root)
 reg = Frame(root)
+aanbiederGUI = Frame(root)
 
-class knoppen:
-    for frame in (start, inlog, reg):
-        frame.grid(row=0, column=0, sticky='news')
-    Label(start, text='Startpagina').pack()
-    Button(start, text='Ga naar inlog pagina', command=lambda:raise_frame(inlog), width=25).pack(side=LEFT)
-    # 'Maakt een knop met als parent f1, wanneer je er op klikt ga je naar de aangeven f, in dit geval f2.'
-    Button(start, text='Ga naar registratie pagina', command=lambda:raise_frame(reg), width=25).pack(side=RIGHT)
+for frame in (start, inlog, reg, aanbiederGUI):
+    frame.grid(row=0, column=0, sticky='news')
 
-    Label(inlog, text='Inlog pagina').pack()
-    Button(inlog, text='Ga naar registratie pagina', command=lambda:raise_frame(reg), width=25).pack(side=RIGHT)
-    Button(inlog, text='Ga naar startpagina', command=lambda:raise_frame(start), width=25).pack(side=LEFT)
+Label(start, text='Startpagina').pack()
+Button(start, text='Ga naar inlog pagina', command=lambda:raise_frame(inlog), width=25).pack(side=LEFT, padx=2)
+# 'Maakt een knop met als parent f1, wanneer je er op klikt ga je naar de aangeven f, in dit geval f2.'
+Button(start, text='Ga naar registratie pagina', command=lambda:raise_frame(reg), width=25).pack(side=RIGHT, padx=2)
 
-    Label(reg, text='Registratie pagina').pack()
-    Button(reg, text='Ga naar startpagina', command=lambda:raise_frame(start), width=25).pack(side=RIGHT)
-    Button(reg, text='Ga naar inlog pagina', command=lambda:raise_frame(inlog), width=25).pack(side=LEFT)
+Label(inlog, text='Inlog pagina').pack()
+Button(inlog, text='Ga naar registratie pagina', command=lambda:raise_frame(reg), width=25).pack(side=RIGHT, padx=2)
+Button(inlog, text='Ga naar startpagina', command=lambda:raise_frame(start), width=25).pack(side=LEFT, padx=2)
 
-class login:
-    labelGebruiker = Label(inlog,
-                           text='Vul uw gebruikersnaam in: ',
-                           width=25).pack()
-    entryGebruiker = Entry(inlog,
-                           width=25).pack()
+Label(reg, text='Registratie pagina').pack()
+Button(reg, text='Ga naar startpagina', command=lambda:raise_frame(start), width=25).pack(side=RIGHT, padx=2)
+Button(reg, text='Ga naar inlog pagina', command=lambda:raise_frame(inlog), width=25).pack(side=LEFT, padx=2)
 
-    labelWw = Label(inlog,
-                    text='Vul uw wachtwoord in: ',
-                    width=25).pack()
-    entryWw = Entry(inlog,
-                    width=25,
-                    show='*').pack()
-    # wil extra ruimte hier tussen
-    button = Button(inlog,
-                    text='Log in',
-                    width=22).pack()
+Label(aanbiederGUI, text='Pagina van de aanbieder').pack()
+Button(aanbiederGUI, text='Log uit', command=lambda:raise_frame(inlog), width=25).pack(padx=2)
 
-class registratie:
-    labelGebruiker=Label(reg,
-                         text='Vul uw gewenste gebruikersnaam in: ',
-                         width=35).pack()
-    entryGebruiker = Entry(reg,
-                           width=35).pack()
+# ---------------------------------------------------------------------------------------------------------------------
 
-    labelWw1 = Label(reg,
-                     text='Vul uw gewenste wachtwoord in: ',
+labelGebruiker = Label(inlog,
+                       text='Vul uw gebruikersnaam in: ',
+                       width=25).pack()
+entryGebruiker = Entry(inlog,
+                       width=25).pack(pady=2)
+
+labelWw = Label(inlog,
+                text='Vul uw wachtwoord in: ',
+                width=25).pack()
+entryWw = Entry(inlog,
+                width=25,
+                show='*').pack(pady=2)
+# wil extra ruimte hier tussen
+button = Button(inlog,
+                text='Log in',
+                command=lambda:raise_frame(aanbiederGUI),
+                width=22).pack(pady=4)
+
+# ---------------------------------------------------------------------------------------------------------------------
+
+labelGebruikerReg=Label(reg,
+                     text='Vul uw gewenste gebruikersnaam in: ',
                      width=35).pack()
-    entryWw1 = Entry(reg,
-                     width=35,
-                     show='*').pack()
+entryGebruikerReg = Entry(reg,
+                       width=35).pack(pady=2)
 
-    labelWw2 = Label(reg,
-                     text='Vul nogmaals uw gewenste wachtwoord in: ',
-                     width=35).pack()
-    entryWw2 = Entry(reg,
-                     width=35,
-                     show='*').pack()
+labelWw1 = Label(reg,
+                 text='Vul uw gewenste wachtwoord in: ',
+                 width=35).pack()
+entryWw1 = Entry(reg,
+                 width=35,
+                 show='*').pack(pady=2)
 
-    labelEmail = Label(reg,
-                       text='Vul uw emailaddres in: ',
-                       width=35).pack()
-    entryEmail = Entry(reg,
-                       width=35).pack()
+labelWw2 = Label(reg,
+                 text='Vul nogmaals uw gewenste wachtwoord in: ',
+                 width=35).pack()
+entryWw2 = Entry(reg,
+                 width=35,
+                 show='*').pack(pady=2)
 
-    button = Button(reg,
-                    text='Registreer',
-                    width=22,
-                    command='clickedreg').pack()
+labelEmail = Label(reg,
+                   text='Vul uw emailaddres in: ',
+                   width=35).pack()
+entryEmail = Entry(reg,
+                   width=35).pack(pady=2)
 
-    # with open('aanbieders.csv', 'r', newline='') as aanbieders:
-    #     reader = csv.reader(aanbieders, delimiter=';')
-    #
-    #     lijst_aanbieders = []
-    #
-    #     for row in reader:
-    #         lijst_aanbieders.append(row[0])
-    #
-    #     if entryGebruiker in lijst_aanbieders:
-    #         bericht = 'Gebruikersnaam is al bezet!'
-    #         showinfo(title='popup', message=bericht)
-    #
-    # print(lijst_aanbieders)
+buttonReg = Button(reg,
+                text='Registreer',
+                width=22,
+                command=clickedReg).pack(pady=4)
 
+# ---------------------------------------------------------------------------------------------------------------------
 
 raise_frame(start)
 root.mainloop()
