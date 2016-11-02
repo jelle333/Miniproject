@@ -1,11 +1,15 @@
 import requests
 import xmltodict
-import datetime
+from datetime import datetime, timedelta
 
-date = datetime.datetime.now().strftime ("%d-%m-%Y")
+vandaagDatum = datetime.now()
+morgenDatum = vandaagDatum + timedelta(days=1)
 
-api_url = 'http://api.filmtotaal.nl/filmsoptv.xml?apikey=etr76i16piyqy73oqbybd9l6hfe8laxb&dag='+date+'&sorteer=0'
-response = requests.get(api_url) #auth=auth_details)
+vandaag = vandaagDatum.strftime ("%d-%m-%Y")
+morgen = morgenDatum.strftime ("%d-%m-%Y")
+
+api_url = 'http://api.filmtotaal.nl/filmsoptv.xml?apikey=etr76i16piyqy73oqbybd9l6hfe8laxb&dag='+vandaag+'&sorteer=0'
+response = requests.get(api_url)
 filmXML = xmltodict.parse(response.text)
 info = []
 filmInfo = filmXML['filmsoptv']['film']
